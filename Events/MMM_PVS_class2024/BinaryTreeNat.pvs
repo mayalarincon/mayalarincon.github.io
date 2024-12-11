@@ -1,0 +1,5 @@
+BinaryTreeNat: DATATYPE
+BEGIN 
+    nil: nil?
+    bin(left: BinaryTreeNat, elem:nat, right: BinaryTreeNat): bin?
+END BinaryTreeNat

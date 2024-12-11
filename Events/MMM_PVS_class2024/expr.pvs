@@ -1,0 +1,44 @@
+expr[T: type+, +,*: [T,T->T]]: theory
+begin
+  assuming
+    plus_assoc: assumption associative?(+)
+  endassuming
+ 
+  expr: datatype
+  begin
+    constant(value: T): const?
+    variable(idx: nat): var?
+    add(arg1,arg2: expr): add?
+    mul(arg1,arg2: expr): mul?
+  end expr
+
+  eval(bind: [nat->T])(e: expr)
+  : recursive T
+  = cases e of
+      constant(val): val,
+      variable(idx): bind(idx),
+      add(arg1, arg2): eval(bind)(arg1) + eval(bind)(arg2),
+      mul(arg1, arg2): eval(bind)(arg1) * eval(bind)(arg2)
+    endcases
+  measure e by <<
+
+  sum(args: (cons?[expr])): recursive expr
+  = if null?(cdr(args)) then
+      car(args)
+    else
+      add(car(args), sum(cdr(args)))
+    endif
+  measure length(args)
+
+  %
+  % Define the function flatten_add that flattens all the add applications (associativity)
+  %
+  % Example:
+  % flatten_add( add( add( variable(0), variable(1)), variable(2) ) ) = sum( variable(0), variable(1), variable(2) )
+  % flatten_add( add( variable(0), add( variable(1)), variable(2) ) ) = sum( variable(0), variable(1), variable(2) )
+  %  
+
+  flatten_add(e: expr) : expr
+  % TODO define
+
+end expr

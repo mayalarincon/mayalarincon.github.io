@@ -1,0 +1,141 @@
+binary_tree_nat: THEORY
+BEGIN 
+
+  IMPORTING BinaryTreeNat
+
+  %
+  % Exercise 1: Write a constant that represents the following binary tree
+  %   a
+  %  / \
+  % b   c
+  a,b,c: nat
+
+  ex1: BinaryTreeNat % = TODO complete here
+
+
+  %
+  % Exercise 2: Write a function
+  %   height: [BinaryTreeNat -> nat]
+  % to calculate the height of a binary tree
+  %
+  % Hint
+  % Try a recursive declaration such as
+  %   height(t: BinaryTreeNat): RECURSIVE nat =
+  %   [...]
+  %   MEASURE [...]
+
+
+
+  %
+  % Exercise 3: Write a lemma to state that the height of ex1 is 2
+  % and prove it.
+  %
+  % (possible) useful commands:
+  % - help <name of command>
+  % - expand <name>
+
+
+
+  %
+  % Exercise 4: Write a function 
+  %   size: [BinaryTreeNat -> nat]
+  % to return the size of an binary tree
+  % i.e., the amount of elements in the tree.
+  %
+
+
+
+  %
+  % Exercise 5: Write a lemma to state that the size of ex1 is 3
+  % and prove it.
+  % 
+  % (possible) useful commands:
+  % - help <name of command>
+  % - expand <name>
+
+
+
+  %
+  % Exercise 6: Write a function 
+  inorder: [BinaryTreeNat -> list[nat]]
+  % that given a BinaryTreeNat, returns a 
+  % list containing the in-order traversal of the tree.
+  % (Feel free to restate the declaration of inorder above.)
+  
+
+
+  %
+  % Exercise 7: Prove the following lemma
+  % (possible) useful commands:
+  % - help <name of command>
+  % - expand <name>
+  ex1_inorder: LEMMA inorder(ex1) = (: b, a, c :)
+
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  %
+  % Have you used grind in the proof of the previous lemmas?
+  %
+
+  %
+  % Exercise 8: Write a lemma to state that the size of a binary tree t
+  % is the lenght of inorder(t)
+  %
+  % (possible) useful lemmas:
+  % - BinaryTreeNat_induction
+  % - lenght_append[nat], from structures@more_list_props
+  IMPORTING structures@more_list_props
+  % (possible) useful commands:
+  % - help <name of command>
+  % - skolem <fnum> (<fresh names>)
+  % - use <lemma/axiom name>
+  % - replace <fnum (what)> [<fnum (where)>] [:hide? <t|nil>]
+  %
+
+
+  % The two following trees are said to be mirror 
+  % reflections of each other
+  %
+  %      c       c
+  %     / \     / \
+  %    b   e   e   b
+  %   / \         / \
+  %  a   d       d   a
+  %
+  % The following predicate states formally when
+  % two arbitrary trees are reflections of each other.
+  reflection?(t1,t2: BinaryTreeNat): bool =
+    inorder(t1) = reverse(inorder(t2))
+  %
+  %
+  % Exercise 9: Write a recursive function that generates the
+  % reflection of any binary tree.
+  %
+
+  %
+  % Exercise 10:Prove that the function is correct, i.e., the
+  % result it's the reflection of the input.
+  %
+  % (possible) useful lemmas:
+  % - BinaryTreeNat_induction
+  % - reverse_append[nat], from structures@more_list_props
+  % - append_append_cons[nat], from structures@more_list_props
+  % (possible) useful commands:
+  % - help <name of command>
+  % - skolem <fnum> (<fresh names>)
+  % - flatten
+  % - expand <name>
+  % - use <lemma/axiom name>
+  % - replace <fnum (what)> [<fnum (where)>] [:hide? <t|nil>]
+
+END binary_tree_nat
