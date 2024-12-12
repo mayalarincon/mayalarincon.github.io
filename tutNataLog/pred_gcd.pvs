@@ -1,0 +1,66 @@
+%%%%-------------------------------------------------------------------------
+%%                                                                          
+%% Authors:          Mauricio Ayala Rincon  
+%%                   Ariane Alves Almeida
+%%                   Grupo de Teoria da Computacao
+%%                   Universidade de Brasília - Brazil  
+%%              
+%%
+%% Deduction training with predicate PVS proof rules for the 
+%% "Reasoning in PVS" mini-course given at Nat@logic, August 2015  
+%% 
+%% A few properties about the notion of greates common divisor.                           
+%%                                                                      
+%% Last Modified On: August 30, 2015                                      
+%%                                                                          
+%%---------------------------------------------------------------------------
+
+pred_gcd: THEORY
+ BEGIN
+
+ m, n, p : VAR int
+
+ k : VAR nat
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition of gcd for integers. 
+
+gcd(m, (n | NOT m=0 OR NOT n=0), k) : bool =
+  divides(k,m) AND divides(k,n) AND 
+  FORALL(p) : divides(p, m) AND divides(p,n) =>  p<=k   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Properties of gcd
+
+%% Use propositional deductive commands and (skolem) and (inst) PVS commands
+
+%% gcd is a positive natural number
+ gcd_nat : LEMMA FORALL (m,(n | NOT m=0 OR NOT  n=0),k) : gcd(m,n,k) => k > 0
+
+
+%% gcd is a commutative relation (regarding the first two parameters)
+ gcd_commute : LEMMA  FORALL (m,(n | NOT m=0 OR NOT n=0),k) : gcd(m,n,k) <=> gcd(n,m,k)
+
+%% gcd divides its first argument  - Definitional
+ gcd_divides_left : LEMMA  FORALL (m,(n | NOT m=0 OR NOT n=0),k) : 
+                   gcd(m,n,k) => divides(k, m)
+
+%% gcd divides its second argument - Definitional 
+ gcd_divides_right : LEMMA FORALL (m,(n | NOT m=0 OR NOT n=0),k) :
+                   gcd(m,n,k) => divides(k,n)
+
+%% gcd of two integers is the same than for their absolute values
+ gcd_abs : LEMMA FORALL(m,(n | NOT m=0 OR NOT n=0),k) : 
+                   gcd(m,n,k) <=> gcd(abs(m),abs(n),k)
+
+%% some step towards modular properties of gcd
+ gcd_is_gcd_plus : LEMMA  FORALL (m,(n | NOT m=0 OR NOT n=0),k) :
+                  gcd(m,n,k) => gcd(m+n,n,k)
+
+%% Thowards the improved efficient Euclidian algorithm 
+gcd_is_gcd_mod : LEMMA FORALL (m, a : posnat, k) :
+                    gcd(m,a,k) => gcd(rem(a)(m),a,k)
+
+
+ END pred_gcd

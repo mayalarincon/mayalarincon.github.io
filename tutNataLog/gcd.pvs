@@ -1,0 +1,165 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Examples of correctness of gcd functions ZxZ -> N       %%%%%%%
+%%%  Mauricio Ayala-Rincon, Grupo de Teoria da Computação    %%%%%%%
+%%%  30/01/2010 (Summer Course, Universidade de Brasília)    %%%%%%%
+%%%  Simplified and adapted for the "Reasoning in PVS"       %%%%%%%
+%%%   mini-course given at Nat@logic, August 2015            %%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+%%% gcd is mathematically defined over ZxZ\(0,0) as the      %%%%%%%
+%%% "greatest common divisor of two integers, one of which   %%%%%%%
+%%% should be different from zero.                           %%%%%%%
+%%% Three different gcd functions are specified and proved   %%%%%%%
+%%% correct.                                                 %%%%%%%
+%%% schoolar style implementation of gcd for integers.       %%%%%%%
+%%% Thiago Mendonca Ferreira Ramos                           %%%%%%% 
+%%% Ariane Alves Almeida                                     %%%%%%%
+%%% Mauricio Ayala-Rincon                                    %%%%%%%
+%%% Grupo de Teoria da Computacao                            %%%%%%%
+%%% Universidade de Brasilia                                 %%%%%%%
+%%% Las modified 28/08/2015                                  %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+gcd: THEORY
+ BEGIN
+
+ n, m : VAR int
+
+ k,a,b  : VAR nat
+
+ i,j,x,y : VAR posnat
+
+
+%% gcd for integers using naive version of Euclid algorithm. 
+%% Notice this is wrongly defined for input (0,0).
+ gcd(n, m) : RECURSIVE nat = 
+                  IF abs(n) = abs(m) THEN abs(n) 
+                  ELSE IF (n = 0 OR m = 0) THEN abs(n+m) 
+                       ELSE IF (abs(n) > abs(m)) THEN 
+                                           gcd(abs(n)-abs(m), abs(m))
+                                       ELSE gcd(abs(m)-abs(n),abs(n)) 
+                            ENDIF
+                       ENDIF
+                  ENDIF
+ MEASURE abs(n)+abs(m)
+	                    
+
+%% Efficient specification of gcd using improved version of Euclid algorithm.
+%% Notice this is also wrongly defined for input (0,0).
+gcd_eff(n,m) : RECURSIVE nat = 
+                  IF abs(n) = abs(m) THEN abs(n) 
+                  ELSE IF (n = 0 OR m = 0) THEN abs(n+m) 
+                       ELSE IF (abs(n) > abs(m)) THEN 
+                               gcd_eff(rem(abs(m))(abs(n)), abs(m))
+                            ELSE gcd_eff(rem(abs(n))(abs(m)),abs(n)) 
+                            ENDIF
+                       ENDIF
+                  ENDIF
+MEASURE abs(n)+abs(m)
+
+
+%% A simple specification of gcd for naturals switching parameters
+%% maintaining the greater argument as the first parameter.
+ gcd_switching(m : nat, n : posnat) : RECURSIVE nat =
+   IF m = 0 THEN n
+   ELSE IF m < n THEN gcd_switching(n, m)
+        ELSE gcd_switching(m - n, n)
+        ENDIF
+   ENDIF
+ MEASURE lex2(n,m)
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Properties of gcd
+ gcd_commute : LEMMA  FORALL (n,m) : gcd(n,m) = gcd(m,n)
+
+ gcd_divides_left : LEMMA  FORALL (n,m) : 
+                   divides(gcd(m,n), m)
+
+ gcd_divides_right : LEMMA FORALL (n,m) :
+                   divides(gcd(m,n),n)
+
+ gcd_abs : LEMMA FORALL(m,n) : gcd(m,n) = gcd(abs(m),abs(n))
+
+ gcd_is_gcd_plus : LEMMA  FORALL (m,n) :
+                  gcd(m,n) = gcd(m+n,n)
+
+ divides_nat_imp_less : LEMMA FORALL (b : posnat, k) : 
+                            divides(k,b) => k <= b
+
+ divides_imp_div_abs : LEMMA FORALL (m, k) : 
+                            divides(k,m) => divides(k, abs(m))
+
+ 
+ gcd_of_posnats_is_maximum : LEMMA FORALL (m,n : posnat, k) :
+           ( divides(k, m) AND divides(k,n) =>
+                        k <= gcd(m,n) )
+
+
+ gcd_is_maximum : LEMMA FORALL (m, n, k) :
+           (m /= 0 OR n /=0) =>
+           ( divides(k, m) AND divides(k,n) =>
+                        k <= gcd(m,n) )
+
+
+ gcd_is_correct : COROLLARY 
+            (m /= 0 OR n /=0) => divides(gcd(m,n),m) &
+                                 divides(gcd(m,n),n) &
+                                 FORALL (k) : (divides(k,m) & 
+                                               divides(k,n) =>
+                                               k <= gcd(m,n))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Algebraic auxiliary properties used to prove correctness of gcd_eff  
+ rem_b_is_rem_minus_b : LEMMA FORALL (b : posnat, m) :
+                  rem(b)(m) = rem(b)(m-b)
+ 
+ gcd_is_gcd_mod1 : LEMMA FORALL (b : posnat, m : nat) :
+                  gcd(m,b) = gcd(rem(b)(m),b)
+
+ rem_b_is_b_minus_rem_minus : LEMMA FORALL (b : posnat, m) :
+            IF 	rem(b)(m) > 0 THEN rem(b)(-m) = b - rem(b)(m)
+            ELSE rem(b)(-m) = 0 ENDIF
+
+ gcd_is_gcd_mod2 : LEMMA FORALL (b : posnat, m : posnat) :
+                   gcd(-m,b) = gcd(rem(b)(-m),b)
+
+ gcd_is_gcd_mod : LEMMA FORALL (b : posnat, m) :
+                   gcd(m,b) = gcd(rem(b)(m),b)
+
+
+ gcd_is_distributive : LEMMA
+		    (divides(x,m) AND divides(x,n)) IMPLIES
+		    gcd(m,n)=x*gcd(m/x,n/x)
+
+ ndiv_divide : LEMMA
+	    divides(y,i)=>ndiv(i,y)=i/y
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Correctness of gcd_eff
+ gcd_eff_same_gcd : LEMMA FORALL (m,n) : gcd_eff(m,n) = gcd(m,n)
+
+ gcd_eff_is_correct : COROLLARY 
+            (m /= 0 OR n /=0) => divides(gcd_eff(m,n),m) &
+                                 divides(gcd_eff(m,n),n) &
+                                 FORALL (k) : (divides(k,m) & 
+                                               divides(k,n) =>
+                                               k <= gcd_eff(m,n))
+ 
+
+ %%%%%%%%%%%%%%%%%%%%%%%
+ %%% Correctness of gcd_switching
+
+ gcd_switching_same_gcd : LEMMA FORALL (m: nat, n: posnat) : gcd_switching(m,n) = gcd(m,n)
+
+ gcd_switching_is_correct : COROLLARY 
+       FORALL (m: nat, n: posnat) : 
+         divides(gcd_switching(m,n),m) &
+         divides(gcd_switching(m,n),n) &
+         FORALL (k) : (divides(k,m) & divides(k,n) =>
+                                          k <= gcd_switching(m,n))
+   
+
+ END gcd
