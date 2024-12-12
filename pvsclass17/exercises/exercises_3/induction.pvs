@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Exercises on Induction, Recursion, and Iteration (Natural Numbers)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+induction: THEORY
+BEGIN
+
+  %
+  % Exercise 1
+  %
+
+  % Assume the following definitions from ints@factorial and the PVS prelude
+  %  factorial(n): RECURSIVE posnat =
+  %    IF n = 0 THEN 1
+  %    ELSE n*factorial(n-1) 
+  %  ENDIDF 
+  %  MEASURE n
+  %
+  %  even?(i): bool = EXISTS j: i = j * 2
+
+  IMPORTING ints@factorial  
+
+  % Start the proof with (induct "n") and follow the hints.
+  factorial_even : LEMMA
+    FORALL (n:above(1)) : 
+      even?(factorial(n))
+
+  %
+  % Exercise 2
+  %
+
+  % Start the proof with (induct "n") and follow the hints.
+  factorial_ge : LEMMA
+    FORALL (n:nat): factorial(n) >= n
+
+  %
+  % Exercise 3
+  %
+
+  m,n : VAR nat
+
+  % Ackermann
+  ack(m,n) : RECURSIVE nat =
+    IF    m = 0 THEN n+1
+    ELSIF n = 0 THEN ack(m-1,1)
+    ELSE ack(m-1,ack(m,n-1))
+    ENDIF
+  MEASURE lex2(m,n)
+
+  % Define a recursive judgement that express the fact that ack(m,n) > m+n. 
+  % You may want to use the type above(m+n)
+  ack_gt_m_n : RECURSIVE JUDGEMENT
+    ack(m,n) HAS_TYPE above(m+n)
+
+  ack_gt : LEMMA
+    ack(m,n) > m+n
+
+  %
+  % Exercise 4
+  %
+
+  %   The PVS prelude includes the following definitions:
+  %
+  %   expt(r, n): RECURSIVE real =
+  %     IF n = 0 THEN 1
+  %     ELSE r * expt(r, n-1)
+  %     ENDIF
+  %    MEASURE n;
+  %
+  %  An imperative version of expt in pseudo-code:
+  %  function expt_it(x:real,n:nat):nat {
+  %    a := 1;
+  %    // a = expt(x,0)
+  %    for (i:=1; i <= n; i++) {
+  %    // invariant: a = expt(x,i)
+  %      a := a*x;
+  %    }
+  %    return a;
+  %    // post: a = expt(x,n)
+  %  }
+
+  IMPORTING structures@for_iterate
+
+  expt_it(x:real,n:nat): real =
+    for[real](1,n,1,LAMBDA(i:subrange(1,n),a:real):a*x)
+
+  % Use the lemma "for_induction[real]" when appropriate. 
+  % The invariant you need has the form LAMBDA(i:upto(n),a:real): a = ...
+  expt_it_sound : LEMMA
+    FORALL(x:real,n:nat): expt_it(x,n) = expt(x,n)
+
+  %
+  % Exercise 5
+  %
+
+  % Sample inductive definitions, use M-x ppe to see automatically
+  % generated induction schemas
+
+  even(n:nat): INDUCTIVE bool = 
+    n = 0 OR (n > 1 AND even(n - 2))
+
+  % Start the proof with (rule-induct "even"). The rest of the proof is simple. 
+  we_are_even: LEMMA
+    even(n) IMPLIES even?(n)
+
+END induction

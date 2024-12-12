@@ -1,0 +1,25 @@
+pretty_poly : THEORY
+BEGIN
+  IMPORTING poly_expr
+
+  % Declaring some variables
+  pe,pe1,pe2 : VAR PolyExpr
+  x          : VAR real
+  n          : VAR posnat
+
+  % Defining some infix operators as syntactic sugar
+  ; +(pe1,pe2): MACRO PolyExpr = ADD(pe1,pe2)
+  ; -(pe1,pe2): MACRO PolyExpr = SUB(pe1,pe2)
+  ; *(pe1,pe2): MACRO PolyExpr = MUL(pe1,pe2)
+  ; ^(pe,n)   : MACRO PolyExpr = POW(pe,n)
+
+  % Defining some conversions
+  
+  r2ae(x:real) : MACRO PolyExpr = CONST(x)
+
+  CONVERSION r2ae,eval
+
+  test : LEMMA
+    dx( (X+3)^2-5*X )(x) = (2*X + 1)(x) 
+
+END pretty_poly

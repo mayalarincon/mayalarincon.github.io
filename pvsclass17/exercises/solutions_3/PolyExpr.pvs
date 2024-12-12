@@ -1,0 +1,11 @@
+% Deep embedding of polynomial expressions
+PolyExpr: DATATYPE 
+BEGIN
+  CONST(val:real)	         : constant?	
+  X                              : variable?	
+  ADD(expr1,expr2:PolyExpr)      : addition?	
+  SUB(expr1,expr2:PolyExpr)      : subtraction?
+  MUL(expr1,expr2:PolyExpr)      : multiplication?
+  POW(expr:PolyExpr,expo:posnat) : power?
+END PolyExpr
+

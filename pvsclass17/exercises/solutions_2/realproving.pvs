@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Exercises on Real Number Proving
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+realproving : THEORY
+BEGIN
+
+  googol     : MACRO real = 10^100
+  googolplex : MACRO real = 10^googol
+
+  %
+  % Exercise 1
+  %
+
+  googolplex_gt_googol2 : LEMMA
+    googolplex > googol * googol
+
+%|- googolplex_gt_googol2 : PROOF
+%|- (then (rewrite "expt_plus" :dir rl) (rewrite "both_sides_expt_gt1_gt")
+%|-  (spread (case "10^100 > 10^3 AND 10^3 > 200")
+%|-   ((then (assert) (flatten) (assert))
+%|-    (then (hide 2)
+%|-     (spread (split) ((rewrite "both_sides_expt_gt1_gt") (grind)))))))
+%|- QED
+
+  %
+  % Exercise 2
+  %
+
+  %% Prove that y*(1-x)*(1-x) <= 0 if y <= 0
+  ex_2 : LEMMA
+    FORALL (x:real,y:real): y <= 0 IMPLIES y*(1-x)*(1-x) <= 0
+
+%|- ex_2 : PROOF
+%|- (then (skeep) (name-replace "XX" "(1-x)") (grind-reals))
+%|- QED
+
+  %
+  % Exercise 3
+  %
+
+  IMPORTING Sturm@strategies
+
+  ex_3 : LEMMA
+    FORALL (x:real) : x*(1-x) <= 1/4
+
+%|- ex_3 : PROOF
+%|- (then (skeep) (sturm))
+%|- QED
+
+  %
+  % Exercise 4
+  %
+
+  IMPORTING Tarski@strategies
+
+  ex_4 : LEMMA
+    FORALL (x:real) : x^2 <= 1 IFF -1 <= x AND x <= 1 
+
+%|- ex_4 : PROOF
+%|- (then (skeep) (spread (ground) ((tarski) (tarski) (tarski))))
+%|- QED
+    
+  %
+  % Exercise 5
+  %
+
+  IMPORTING interval_arith@strategies
+
+  r(x:real) : MACRO real =
+    x - (11184811/33554432) * x^3 - (13421773/67108864) * x^5
+
+  atan_implementation : LEMMA
+    FORALL (x:real):
+    abs(x) <= 1/3 IMPLIES
+    abs(atan(x) - r(x)) <= 10^(-2)
+%|- atan_implementation : PROOF (interval) QED
+
+  %
+  % Exercise 6
+  %
+
+  IMPORTING exact_real_arith@strategies
+
+  pi_10th : LEMMA
+    floor(((pi*10^9)-floor(pi*10^9))*10) = 5
+
+%|- pi_10th : PROOF
+%|- (then (era-numerical (! 1 1)) (assert))
+%|- QED
+    
+  
+END realproving

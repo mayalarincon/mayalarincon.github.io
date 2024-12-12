@@ -1,0 +1,112 @@
+%%%%-------------------------------------------------------------------------------
+%%%    gcd_pred.  Properties of the greatest commond divisor.
+%%%    
+%%%    Predicational examples for the
+%%%               "tutorial on PVS"
+%%%    collocated with Tableaux/FroCoS/ITP, Brasilia, September 2017
+%%%    
+%%%   Authors: Mauricio Ayala Rincon, Cesar Muñoz and Mariano Moscato    
+%%%       
+%%%   Last modified on: 17 August 2017.
+%%%%------------------------------------------------------------------------------
+
+
+pred_gcd: THEORY
+ BEGIN
+
+ m, n, p : VAR int
+
+ k : VAR nat
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition of the predicate gcd for integers. 
+
+gcd(m, (n | NOT m=0 OR NOT n=0), k) : bool =
+  divides(k,m) AND divides(k,n) AND 
+  FORALL(p) : divides(p, m) AND divides(p,n) =>  p<=k   
+
+   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Predicational properties of gcd
+
+%% Use propositional deductive commands and (skolem) and (inst) PVS commands
+
+%% gcd is a positive natural number
+ gcd_posnat : LEMMA FORALL (m,(n | NOT m=0 OR NOT  n=0),k) : gcd(m,n,k) => k > 0
+
+%% unicity of gcd
+ gcd_unique : LEMMA FORALL (m,(n | NOT m=0 OR NOT  n=0), k,k1:posnat) :
+  gcd(m,n,k) AND gcd(m,n,k1) => k = k1
+
+%% gcd is a commutative relation (regarding the first two parameters)
+ gcd_commutes : LEMMA  FORALL (m,(n | NOT m=0 OR NOT n=0),k) : gcd(m,n,k) <=> gcd(n,m,k)
+
+%% gcd divides its first argument  - Definitional
+ gcd_divides_left : LEMMA  FORALL (m,(n | NOT m=0 OR NOT n=0),k) : 
+                   gcd(m,n,k) => divides(k, m)
+
+%% gcd divides its second argument - Definitional 
+ gcd_divides_right : LEMMA FORALL (m,(n | NOT m=0 OR NOT n=0),k) :
+                   gcd(m,n,k) => divides(k,n)
+
+%% gcd of two integers is the same than for their absolute values
+ gcd_abs : LEMMA FORALL(m,(n | NOT m=0 OR NOT n=0),k) : 
+                   gcd(m,n,k) <=> gcd(abs(m),abs(n),k)
+
+%% some step towards modular properties of gcd
+ gcd_plus : LEMMA  FORALL (m,(n | NOT m=0 OR NOT n=0),k) :
+                  gcd(m,n,k) <=> gcd(m+n,n,k)
+
+%% Euclid's Theorem for gcd  
+ gcd_mod : LEMMA FORALL (m, a : posnat, k) :
+                    gcd(m,a,k) <=> gcd(rem(a)(m),a,k)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Examples below require induction.
+
+% Recursive computation of gcd by Euclidean's method
+ euclidean_gcd(m, (n | NOT m=0 OR NOT n=0)) : RECURSIVE posnat = 
+                  IF abs(n) = abs(m) THEN abs(n) 
+                  ELSE IF (n = 0 OR m = 0) THEN abs(n+m) 
+                       ELSE IF (abs(n) > abs(m)) THEN 
+                               euclidean_gcd(rem(abs(m))(abs(n)), abs(m))
+                            ELSE euclidean_gcd(rem(abs(n))(abs(m)),abs(n)) 
+                            ENDIF
+                       ENDIF
+                  ENDIF
+MEASURE abs(n)+abs(m)
+
+
+% Correctness of the above algorith. Use induction
+% (measure-induct+ "abs(m)+abs(n)" ("m" "n"))
+euclidean_gcd_is_correct :  LEMMA  FORALL (m, (n | NOT m=0 OR NOT n=0), k):
+  euclidean_gcd(m,n) = k IFF gcd(m,n,k)
+
+euclidean_gcd_OK  : COROLLARY FORALL (m, (n | NOT m=0 OR NOT n=0)) :
+   divides(euclidean_gcd(m,n), m) AND  divides(euclidean_gcd(m,n), n) AND
+   FORALL(p) : divides(p, m) AND divides(p,n) =>  p<=euclidean_gcd(m,n)  
+
+% Another recursive but slower algorith based also on Euclid's method. 
+ slow_gcd(m, (n | NOT m=0 OR NOT n=0)) : RECURSIVE posnat = 
+                  IF abs(n) = abs(m) THEN abs(n) 
+                  ELSE IF (n = 0 OR m = 0) THEN abs(n+m) 
+                       ELSE IF (abs(n) > abs(m)) THEN 
+                                slow_gcd(abs(n)-abs(m), abs(m))
+                            ELSE  slow_gcd(abs(m)-abs(n),abs(n)) 
+                            ENDIF
+                       ENDIF
+                  ENDIF
+MEASURE abs(m)+abs(n)
+
+% Again you woul need induction on "abs(m) + abs(n)"
+slow_gcd_is_correct  : LEMMA  FORALL (m, (n | NOT m=0 OR NOT n=0), k): 
+   slow_gcd(m,n) = k IFF gcd(m,n,k)
+
+slow_gcd_OK  : COROLLARY FORALL (m, (n | NOT m=0 OR NOT n=0)) :
+   divides(slow_gcd(m,n), m) AND  divides(slow_gcd(m,n), n) AND
+   FORALL(p) : divides(p, m) AND divides(p,n) =>  p<=slow_gcd(m,n)  
+
+
+ END pred_gcd

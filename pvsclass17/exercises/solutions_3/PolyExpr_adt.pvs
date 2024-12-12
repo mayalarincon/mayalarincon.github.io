@@ -1,0 +1,375 @@
+%%% ADT file generated from PolyExpr
+
+PolyExpr_adt: THEORY
+ BEGIN
+
+  PolyExpr: TYPE
+
+  constant?, variable?, addition?, subtraction?, multiplication?, power?:
+        [PolyExpr -> boolean]
+
+  val: [(constant?) -> real]
+
+  expr1:
+        [{x: PolyExpr |
+                  addition?(x) OR subtraction?(x) OR multiplication?(x)} ->
+           PolyExpr]
+
+  expr2:
+        [{x: PolyExpr |
+                  addition?(x) OR subtraction?(x) OR multiplication?(x)} ->
+           PolyExpr]
+
+  expr: [(power?) -> PolyExpr]
+
+  expo: [(power?) -> posnat]
+
+  CONST: [real -> (constant?)]
+
+  X: (variable?)
+
+  ADD: [[PolyExpr, PolyExpr] -> (addition?)]
+
+  SUB: [[PolyExpr, PolyExpr] -> (subtraction?)]
+
+  MUL: [[PolyExpr, PolyExpr] -> (multiplication?)]
+
+  POW: [[PolyExpr, posnat] -> (power?)]
+
+  PolyExpr_ord: [PolyExpr -> upto(5)]
+
+  PolyExpr_ord_defaxiom: AXIOM
+         (FORALL (val: real): PolyExpr_ord(CONST(val)) = 0)
+     AND PolyExpr_ord(X) = 1
+     AND (FORALL (expr1: PolyExpr, expr2: PolyExpr):
+            PolyExpr_ord(ADD(expr1, expr2)) = 2)
+     AND (FORALL (expr1: PolyExpr, expr2: PolyExpr):
+            PolyExpr_ord(SUB(expr1, expr2)) = 3)
+     AND (FORALL (expr1: PolyExpr, expr2: PolyExpr):
+            PolyExpr_ord(MUL(expr1, expr2)) = 4)
+     AND (FORALL (expr: PolyExpr, expo: posnat):
+            PolyExpr_ord(POW(expr, expo)) = 5);
+
+  ord(x: PolyExpr): [PolyExpr -> upto(5)] =
+      CASES x
+        OF CONST(CONST1_var): 0,
+           X: 1,
+           ADD(ADD1_var, ADD2_var): 2,
+           SUB(SUB1_var, SUB2_var): 3,
+           MUL(MUL1_var, MUL2_var): 4,
+           POW(POW1_var, POW2_var): 5
+        ENDCASES
+
+  PolyExpr_CONST_extensionality: AXIOM
+    FORALL (constant?_var: (constant?), constant?_var2: (constant?)):
+      val(constant?_var) = val(constant?_var2) IMPLIES
+       constant?_var = constant?_var2;
+
+  PolyExpr_CONST_eta: AXIOM
+    FORALL (constant?_var: (constant?)):
+      CONST(val(constant?_var)) = constant?_var;
+
+  PolyExpr_X_extensionality: AXIOM
+    FORALL (variable?_var: (variable?), variable?_var2: (variable?)):
+      variable?_var = variable?_var2;
+
+  PolyExpr_ADD_extensionality: AXIOM
+    FORALL (addition?_var: (addition?), addition?_var2: (addition?)):
+      expr1(addition?_var) = expr1(addition?_var2) AND
+       expr2(addition?_var) = expr2(addition?_var2)
+       IMPLIES addition?_var = addition?_var2;
+
+  PolyExpr_ADD_eta: AXIOM
+    FORALL (addition?_var: (addition?)):
+      ADD(expr1(addition?_var), expr2(addition?_var)) = addition?_var;
+
+  PolyExpr_SUB_extensionality: AXIOM
+    FORALL (subtraction?_var: (subtraction?),
+            subtraction?_var2: (subtraction?)):
+      expr1(subtraction?_var) = expr1(subtraction?_var2) AND
+       expr2(subtraction?_var) = expr2(subtraction?_var2)
+       IMPLIES subtraction?_var = subtraction?_var2;
+
+  PolyExpr_SUB_eta: AXIOM
+    FORALL (subtraction?_var: (subtraction?)):
+      SUB(expr1(subtraction?_var), expr2(subtraction?_var)) =
+       subtraction?_var;
+
+  PolyExpr_MUL_extensionality: AXIOM
+    FORALL (multiplication?_var: (multiplication?),
+            multiplication?_var2: (multiplication?)):
+      expr1(multiplication?_var) = expr1(multiplication?_var2) AND
+       expr2(multiplication?_var) = expr2(multiplication?_var2)
+       IMPLIES multiplication?_var = multiplication?_var2;
+
+  PolyExpr_MUL_eta: AXIOM
+    FORALL (multiplication?_var: (multiplication?)):
+      MUL(expr1(multiplication?_var), expr2(multiplication?_var)) =
+       multiplication?_var;
+
+  PolyExpr_POW_extensionality: AXIOM
+    FORALL (power?_var: (power?), power?_var2: (power?)):
+      expr(power?_var) = expr(power?_var2) AND
+       expo(power?_var) = expo(power?_var2)
+       IMPLIES power?_var = power?_var2;
+
+  PolyExpr_POW_eta: AXIOM
+    FORALL (power?_var: (power?)):
+      POW(expr(power?_var), expo(power?_var)) = power?_var;
+
+  PolyExpr_val_CONST: AXIOM
+    FORALL (CONST1_var: real): val(CONST(CONST1_var)) = CONST1_var;
+
+  PolyExpr_expr1_ADD: AXIOM
+    FORALL (ADD1_var: PolyExpr, ADD2_var: PolyExpr):
+      expr1(ADD(ADD1_var, ADD2_var)) = ADD1_var;
+
+  PolyExpr_expr2_ADD: AXIOM
+    FORALL (ADD1_var: PolyExpr, ADD2_var: PolyExpr):
+      expr2(ADD(ADD1_var, ADD2_var)) = ADD2_var;
+
+  PolyExpr_expr1_SUB: AXIOM
+    FORALL (SUB1_var: PolyExpr, SUB2_var: PolyExpr):
+      expr1(SUB(SUB1_var, SUB2_var)) = SUB1_var;
+
+  PolyExpr_expr2_SUB: AXIOM
+    FORALL (SUB1_var: PolyExpr, SUB2_var: PolyExpr):
+      expr2(SUB(SUB1_var, SUB2_var)) = SUB2_var;
+
+  PolyExpr_expr1_MUL: AXIOM
+    FORALL (MUL1_var: PolyExpr, MUL2_var: PolyExpr):
+      expr1(MUL(MUL1_var, MUL2_var)) = MUL1_var;
+
+  PolyExpr_expr2_MUL: AXIOM
+    FORALL (MUL1_var: PolyExpr, MUL2_var: PolyExpr):
+      expr2(MUL(MUL1_var, MUL2_var)) = MUL2_var;
+
+  PolyExpr_expr_POW: AXIOM
+    FORALL (POW1_var: PolyExpr, POW2_var: posnat):
+      expr(POW(POW1_var, POW2_var)) = POW1_var;
+
+  PolyExpr_expo_POW: AXIOM
+    FORALL (POW1_var: PolyExpr, POW2_var: posnat):
+      expo(POW(POW1_var, POW2_var)) = POW2_var;
+
+  PolyExpr_inclusive: AXIOM
+    FORALL (PolyExpr_var: PolyExpr):
+          constant?(PolyExpr_var) OR variable?(PolyExpr_var)
+       OR addition?(PolyExpr_var) OR subtraction?(PolyExpr_var)
+       OR multiplication?(PolyExpr_var) OR power?(PolyExpr_var);
+
+  PolyExpr_induction: AXIOM
+    FORALL (p: [PolyExpr -> boolean]):
+      (     FORALL (CONST1_var: real): p(CONST(CONST1_var)) AND p(X)
+        AND FORALL (ADD1_var: PolyExpr, ADD2_var: PolyExpr):
+              p(ADD1_var) AND p(ADD2_var) IMPLIES p(ADD(ADD1_var, ADD2_var))
+        AND FORALL (SUB1_var: PolyExpr, SUB2_var: PolyExpr):
+              p(SUB1_var) AND p(SUB2_var) IMPLIES p(SUB(SUB1_var, SUB2_var))
+        AND FORALL (MUL1_var: PolyExpr, MUL2_var: PolyExpr):
+              p(MUL1_var) AND p(MUL2_var) IMPLIES p(MUL(MUL1_var, MUL2_var))
+        AND FORALL (POW1_var: PolyExpr, POW2_var: posnat):
+              p(POW1_var) IMPLIES p(POW(POW1_var, POW2_var)))
+       IMPLIES (FORALL (PolyExpr_var: PolyExpr): p(PolyExpr_var));
+
+  subterm(x: PolyExpr, y: PolyExpr):  boolean =
+      x = y OR
+       CASES y
+         OF CONST(CONST1_var): FALSE,
+            X: FALSE,
+            ADD(ADD1_var, ADD2_var):
+              subterm(x, ADD1_var) OR subterm(x, ADD2_var),
+            SUB(SUB1_var, SUB2_var):
+              subterm(x, SUB1_var) OR subterm(x, SUB2_var),
+            MUL(MUL1_var, MUL2_var):
+              subterm(x, MUL1_var) OR subterm(x, MUL2_var),
+            POW(POW1_var, POW2_var): subterm(x, POW1_var)
+         ENDCASES;
+
+  <<:  (strict_well_founded?[PolyExpr]) =
+      LAMBDA (x, y: PolyExpr):
+        CASES y
+          OF CONST(CONST1_var): FALSE,
+             X: FALSE,
+             ADD(ADD1_var, ADD2_var):
+               (x = ADD1_var OR x << ADD1_var) OR
+                x = ADD2_var OR x << ADD2_var,
+             SUB(SUB1_var, SUB2_var):
+               (x = SUB1_var OR x << SUB1_var) OR
+                x = SUB2_var OR x << SUB2_var,
+             MUL(MUL1_var, MUL2_var):
+               (x = MUL1_var OR x << MUL1_var) OR
+                x = MUL2_var OR x << MUL2_var,
+             POW(POW1_var, POW2_var): x = POW1_var OR x << POW1_var
+          ENDCASES;
+
+  PolyExpr_well_founded: AXIOM strict_well_founded?[PolyExpr](<<);
+
+  reduce_nat(constant?_fun: [real -> nat], variable?_fun: nat,
+             addition?_fun: [[nat, nat] -> nat],
+             subtraction?_fun: [[nat, nat] -> nat],
+             multiplication?_fun: [[nat, nat] -> nat],
+             power?_fun: [[nat, posnat] -> nat]):
+        [PolyExpr -> nat] =
+      LAMBDA (PolyExpr_adtvar: PolyExpr):
+        LET red: [PolyExpr -> nat] =
+              reduce_nat(constant?_fun, variable?_fun, addition?_fun,
+                         subtraction?_fun, multiplication?_fun, power?_fun)
+          IN
+          CASES PolyExpr_adtvar
+            OF CONST(CONST1_var): constant?_fun(CONST1_var),
+               X: variable?_fun,
+               ADD(ADD1_var, ADD2_var):
+                 addition?_fun(red(ADD1_var), red(ADD2_var)),
+               SUB(SUB1_var, SUB2_var):
+                 subtraction?_fun(red(SUB1_var), red(SUB2_var)),
+               MUL(MUL1_var, MUL2_var):
+                 multiplication?_fun(red(MUL1_var), red(MUL2_var)),
+               POW(POW1_var, POW2_var): power?_fun(red(POW1_var), POW2_var)
+            ENDCASES;
+
+  REDUCE_nat(constant?_fun: [[real, PolyExpr] -> nat],
+             variable?_fun: [PolyExpr -> nat],
+             addition?_fun: [[nat, nat, PolyExpr] -> nat],
+             subtraction?_fun: [[nat, nat, PolyExpr] -> nat],
+             multiplication?_fun: [[nat, nat, PolyExpr] -> nat],
+             power?_fun: [[nat, posnat, PolyExpr] -> nat]):
+        [PolyExpr -> nat] =
+      LAMBDA (PolyExpr_adtvar: PolyExpr):
+        LET red: [PolyExpr -> nat] =
+              REDUCE_nat(constant?_fun, variable?_fun, addition?_fun,
+                         subtraction?_fun, multiplication?_fun, power?_fun)
+          IN
+          CASES PolyExpr_adtvar
+            OF CONST(CONST1_var):
+                 constant?_fun(CONST1_var, PolyExpr_adtvar),
+               X: variable?_fun(PolyExpr_adtvar),
+               ADD(ADD1_var, ADD2_var):
+                 addition?_fun(red(ADD1_var), red(ADD2_var),
+                               PolyExpr_adtvar),
+               SUB(SUB1_var, SUB2_var):
+                 subtraction?_fun(red(SUB1_var), red(SUB2_var),
+                                  PolyExpr_adtvar),
+               MUL(MUL1_var, MUL2_var):
+                 multiplication?_fun(red(MUL1_var),
+                                     red(MUL2_var),
+                                     PolyExpr_adtvar),
+               POW(POW1_var, POW2_var):
+                 power?_fun(red(POW1_var), POW2_var, PolyExpr_adtvar)
+            ENDCASES;
+
+  reduce_ordinal(constant?_fun: [real -> ordinal], variable?_fun: ordinal,
+                 addition?_fun: [[ordinal, ordinal] -> ordinal],
+                 subtraction?_fun: [[ordinal, ordinal] -> ordinal],
+                 multiplication?_fun: [[ordinal, ordinal] -> ordinal],
+                 power?_fun: [[ordinal, posnat] -> ordinal]):
+        [PolyExpr -> ordinal] =
+      LAMBDA (PolyExpr_adtvar: PolyExpr):
+        LET red: [PolyExpr -> ordinal] =
+              reduce_ordinal(constant?_fun, variable?_fun, addition?_fun,
+                             subtraction?_fun, multiplication?_fun,
+                             power?_fun)
+          IN
+          CASES PolyExpr_adtvar
+            OF CONST(CONST1_var): constant?_fun(CONST1_var),
+               X: variable?_fun,
+               ADD(ADD1_var, ADD2_var):
+                 addition?_fun(red(ADD1_var), red(ADD2_var)),
+               SUB(SUB1_var, SUB2_var):
+                 subtraction?_fun(red(SUB1_var), red(SUB2_var)),
+               MUL(MUL1_var, MUL2_var):
+                 multiplication?_fun(red(MUL1_var), red(MUL2_var)),
+               POW(POW1_var, POW2_var): power?_fun(red(POW1_var), POW2_var)
+            ENDCASES;
+
+  REDUCE_ordinal(constant?_fun: [[real, PolyExpr] -> ordinal],
+                 variable?_fun: [PolyExpr -> ordinal],
+                 addition?_fun: [[ordinal, ordinal, PolyExpr] -> ordinal],
+                 subtraction?_fun:
+                   [[ordinal, ordinal, PolyExpr] -> ordinal],
+                 multiplication?_fun:
+                   [[ordinal, ordinal, PolyExpr] -> ordinal],
+                 power?_fun: [[ordinal, posnat, PolyExpr] -> ordinal]):
+        [PolyExpr -> ordinal] =
+      LAMBDA (PolyExpr_adtvar: PolyExpr):
+        LET red: [PolyExpr -> ordinal] =
+              REDUCE_ordinal(constant?_fun, variable?_fun, addition?_fun,
+                             subtraction?_fun, multiplication?_fun,
+                             power?_fun)
+          IN
+          CASES PolyExpr_adtvar
+            OF CONST(CONST1_var):
+                 constant?_fun(CONST1_var, PolyExpr_adtvar),
+               X: variable?_fun(PolyExpr_adtvar),
+               ADD(ADD1_var, ADD2_var):
+                 addition?_fun(red(ADD1_var), red(ADD2_var),
+                               PolyExpr_adtvar),
+               SUB(SUB1_var, SUB2_var):
+                 subtraction?_fun(red(SUB1_var), red(SUB2_var),
+                                  PolyExpr_adtvar),
+               MUL(MUL1_var, MUL2_var):
+                 multiplication?_fun(red(MUL1_var),
+                                     red(MUL2_var),
+                                     PolyExpr_adtvar),
+               POW(POW1_var, POW2_var):
+                 power?_fun(red(POW1_var), POW2_var, PolyExpr_adtvar)
+            ENDCASES;
+ END PolyExpr_adt
+
+PolyExpr_adt_reduce[range: TYPE]: THEORY
+ BEGIN
+
+  IMPORTING PolyExpr_adt
+
+  reduce(constant?_fun: [real -> range], variable?_fun: range,
+         addition?_fun: [[range, range] -> range],
+         subtraction?_fun: [[range, range] -> range],
+         multiplication?_fun: [[range, range] -> range],
+         power?_fun: [[range, posnat] -> range]):
+        [PolyExpr -> range] =
+      LAMBDA (PolyExpr_adtvar: PolyExpr):
+        LET red: [PolyExpr -> range] =
+              reduce(constant?_fun, variable?_fun, addition?_fun,
+                     subtraction?_fun, multiplication?_fun, power?_fun)
+          IN
+          CASES PolyExpr_adtvar
+            OF CONST(CONST1_var): constant?_fun(CONST1_var),
+               X: variable?_fun,
+               ADD(ADD1_var, ADD2_var):
+                 addition?_fun(red(ADD1_var), red(ADD2_var)),
+               SUB(SUB1_var, SUB2_var):
+                 subtraction?_fun(red(SUB1_var), red(SUB2_var)),
+               MUL(MUL1_var, MUL2_var):
+                 multiplication?_fun(red(MUL1_var), red(MUL2_var)),
+               POW(POW1_var, POW2_var): power?_fun(red(POW1_var), POW2_var)
+            ENDCASES;
+
+  REDUCE(constant?_fun: [[real, PolyExpr] -> range],
+         variable?_fun: [PolyExpr -> range],
+         addition?_fun: [[range, range, PolyExpr] -> range],
+         subtraction?_fun: [[range, range, PolyExpr] -> range],
+         multiplication?_fun: [[range, range, PolyExpr] -> range],
+         power?_fun: [[range, posnat, PolyExpr] -> range]):
+        [PolyExpr -> range] =
+      LAMBDA (PolyExpr_adtvar: PolyExpr):
+        LET red: [PolyExpr -> range] =
+              REDUCE(constant?_fun, variable?_fun, addition?_fun,
+                     subtraction?_fun, multiplication?_fun, power?_fun)
+          IN
+          CASES PolyExpr_adtvar
+            OF CONST(CONST1_var):
+                 constant?_fun(CONST1_var, PolyExpr_adtvar),
+               X: variable?_fun(PolyExpr_adtvar),
+               ADD(ADD1_var, ADD2_var):
+                 addition?_fun(red(ADD1_var), red(ADD2_var),
+                               PolyExpr_adtvar),
+               SUB(SUB1_var, SUB2_var):
+                 subtraction?_fun(red(SUB1_var), red(SUB2_var),
+                                  PolyExpr_adtvar),
+               MUL(MUL1_var, MUL2_var):
+                 multiplication?_fun(red(MUL1_var),
+                                     red(MUL2_var),
+                                     PolyExpr_adtvar),
+               POW(POW1_var, POW2_var):
+                 power?_fun(red(POW1_var), POW2_var, PolyExpr_adtvar)
+            ENDCASES;
+ END PolyExpr_adt_reduce

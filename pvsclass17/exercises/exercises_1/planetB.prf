@@ -1,0 +1,22 @@
+(planetB
+ (rcond_1 0
+  (rcond_1-1 nil 3715330179
+   ("" (flatten)
+    (("" (lemma "ax1")
+      (("" (split)
+        (("1" (lemma "ax3")
+          (("1" (flatten)
+            (("1" (split -1)
+              (("1" (propax) nil nil) ("2" (propax) nil nil)) nil))
+            nil))
+          nil)
+         ("2" (propax) nil nil))
+        nil))
+      nil))
+    nil)
+   ((ax1 formula-decl nil planetB nil)
+    (ax3 formula-decl nil planetB nil))
+   shostak))
+ (rcond_2 0
+  (rcond_2-1 nil 3715331283 ("" (postpone) nil nil) nil shostak)))
+

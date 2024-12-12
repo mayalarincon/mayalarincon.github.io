@@ -1,0 +1,16 @@
+Processing solutions_1/top.pvs. Writing output to file summaries/solutions_1.summary
+Grand Totals: 42 proofs, 42 attempted, 42 succeeded (10.41 s)
+
+Processing solutions_2/top.pvs. Writing output to file summaries/solutions_2.summary
+Grand Totals: 9 proofs, 9 attempted, 9 succeeded (9.34 s)
+
+Processing solutions_3/top.pvs. Writing output to file summaries/solutions_3.summary
+Grand Totals: 33 proofs, 33 attempted, 33 succeeded (3.55 s)
+
+PVS_LIBRARY_PATH=/home/professor/PVS/nasalib
+solutions_1              [OK: 42 proofs]
+solutions_2              [OK: 9 proofs]
+solutions_3              [OK: 33 proofs]
+
+*** Grand Totals: 84 proofs / 84 formulas. Missed: 0 formulas.
+*** Number of libraries: 3

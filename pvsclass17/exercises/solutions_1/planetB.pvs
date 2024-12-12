@@ -1,0 +1,78 @@
+%%%%-------------------------------------------------------------------------------
+%%%    ThereIsNoPlanB.  There is no "plan B" because there is no "planet B".
+%%%    
+%%%    Propositional examples for the
+%%%               "tutorial on PVS"
+%%%    collocated with Tableaux/FroCoS/ITP, Brasilia, September 2017
+%%%    
+%%%       
+%%%       
+%%%   Last modified on: 7 August 2017.
+%%%%------------------------------------------------------------------------------
+planetB: THEORY
+BEGIN
+
+%  Social, scientific and industrial positions regarding ecological systems and
+%  scientific knowledge and facts about climate change. 
+
+social_activism :  bool           % Popular efforts to promote environmental reforms.
+industrial_predation :  bool      % Consumerism and predatory industrial explorarion.
+disinformation :  bool            % Ignorance and beliefs in non scientific facts.
+scientific_disengagement :   bool % Lack of interest of the scientific community to
+                                  % make accessible knowlegde and facts. 
+belief_in_planB : bool            % Belief in "plan B"
+planetB : bool                    % Existence of a "Planet B".
+
+
+%  Basic relationships among social, scientific and industrial positions 
+
+ax1: AXIOM  disinformation => industrial_predation
+ax2: AXIOM  scientific_disengagement => industrial_predation
+ax3: AXIOM  social_activism IFF NOT industrial_predation
+ax4: AXIOM  belief_in_planB => planetB
+ax5: AXIOM  belief_in_planB => disinformation 
+ax6: AXIOM  NOT planetB
+
+%  Definitions of possible environmental situations
+
+proactive:     bool = social_activism AND NOT belief_in_planB
+promissing:    bool = NOT disinformation AND NOT scientific_disengagement
+critic:        bool = disinformation OR scientific_disengagement
+
+
+%%%   Propositional Formulas to prove  (for Exercise 1)
+
+% Use the commands split, flatten, lemma, and expand to prove these lemmas.
+% You could also try the support commands help, postpone, and do.  You
+% may use any of these lemmas in the proofs of lemmas appearing later in
+% the theory.)
+
+rcond_1: LEMMA  disinformation => NOT social_activism
+
+rcond_2: LEMMA  scientific_disengagement => NOT social_activism
+
+rcond_3: LEMMA  social_activism => promissing
+
+rcond_4: LEMMA  NOT industrial_predation => NOT scientific_disengagement
+
+rcond_5: LEMMA  disinformation => NOT proactive
+
+rcond_6: LEMMA  scientific_disengagement => NOT proactive
+
+rcond_7: LEMMA  NOT industrial_predation => promissing
+
+rcond_8: LEMMA  proactive => promissing
+
+rcond_9: LEMMA  critic => NOT promissing
+
+rcond_10: LEMMA  NOT critic => promissing
+
+rcond_11: LEMMA  promissing IFF NOT critic
+
+rcond_12: LEMMA  promissing OR critic
+
+rcond_13: LEMMA  proactive IFF social_activism
+
+
+
+END planetB

@@ -1,0 +1,11 @@
+(pretty_poly
+ (test 0
+       (test-1 nil 3714937712 ("" (grind) nil nil)
+        ((dx def-decl "PolyExpr" poly_expr nil)
+         (eval def-decl "real" poly_expr nil)
+         (expt def-decl "real" exponentiation nil)
+         (^ const-decl "real" exponentiation nil)
+         (real_times_real_is_real application-judgement "real" reals
+          nil))
+        shostak)))
+

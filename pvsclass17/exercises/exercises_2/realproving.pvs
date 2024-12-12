@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Exercises on Real Number Proving
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+realproving : THEORY
+BEGIN
+
+  googol     : MACRO real = 10^100
+  googolplex : MACRO real = 10^googol
+
+  %
+  % Exercise 1
+  %
+
+  googolplex_gt_googol2 : LEMMA
+    googolplex > googol * googol
+
+  %
+  % Exercise 2
+  %
+
+  %% Prove that y*(1-x)*(1-x) <= 0 if y <= 0
+  ex_2 : LEMMA
+    FORALL (x:real,y:real): y <= 0 IMPLIES y*(1-x)*(1-x) <= 0
+
+  %
+  % Exercise 3
+  %
+
+  IMPORTING Sturm@strategies
+
+  ex_3 : LEMMA
+    FORALL (x:real) : x*(1-x) <= 1/4
+
+  %
+  % Exercise 4
+  %
+
+  IMPORTING Tarski@strategies
+
+  ex_4 : LEMMA
+    FORALL (x:real) : x^2 <= 1 IFF -1 <= x AND x <= 1 
+
+  %
+  % Exercise 5
+  %
+
+  IMPORTING interval_arith@strategies
+
+  r(x:real) : MACRO real =
+    x - (11184811/33554432) * x^3 - (13421773/67108864) * x^5
+
+  atan_implementation : LEMMA
+    FORALL (x:real):
+    abs(x) <= 1/3 IMPLIES
+    abs(atan(x) - r(x)) <= 10^(-2)
+
+  %
+  % Exercise 6
+  %
+
+  % IMPORTING exact_real_arith@strategies
+
+  pi_10th : LEMMA
+    floor(((pi*10^9)-floor(pi*10^9))*10) = 5
+
+END realproving

@@ -1,0 +1,601 @@
+(realproving
+ (googolplex_gt_googol2 0
+  (googolplex_gt_googol2-1 nil 3556882118
+   ("" (rewrite "expt_plus" :dir rl)
+    (("" (rewrite "both_sides_expt_gt1_gt")
+      (("" (case "10^100 > 10^3 AND 10^3 > 200")
+        (("1" (assert) (("1" (flatten) (("1" (assert) nil nil)) nil))
+          nil)
+         ("2" (hide 2)
+          (("2" (split)
+            (("1" (rewrite "both_sides_expt_gt1_gt") nil nil)
+             ("2" (grind) nil nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((both_sides_expt_gt1_gt formula-decl nil exponentiation nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (>= const-decl "bool" reals nil)
+    (nonneg_real nonempty-type-eq-decl nil real_types nil)
+    (> const-decl "bool" reals nil)
+    (posreal nonempty-type-eq-decl nil real_types nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (^ const-decl "real" exponentiation nil)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (expt def-decl "real" exponentiation nil)
+    (mult_divides2 application-judgement "(divides(m))" divides nil)
+    (mult_divides1 application-judgement "(divides(n))" divides nil)
+    (even_times_int_is_even application-judgement "even_int" integers
+     nil)
+    (posint_times_posint_is_posint application-judgement "posint"
+     integers nil)
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (posrat_div_posrat_is_posrat application-judgement "posrat"
+     rationals nil)
+    (posnat_expt application-judgement "posnat" exponentiation nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (posint_exp application-judgement "posint" exponentiation nil)
+    (posint_plus_nnint_is_posint application-judgement "posint"
+     integers nil)
+    (even_plus_even_is_even application-judgement "even_int" integers
+     nil)
+    (nzreal nonempty-type-eq-decl nil reals nil)
+    (/= const-decl "boolean" notequal nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (number nonempty-type-decl nil numbers nil)
+    (expt_plus formula-decl nil exponentiation nil))
+   shostak))
+ (ex_2 0
+  (ex_2-1 nil 3715081688
+   ("" (skeep)
+    (("" (name-replace "XX" "(1-x)") (("" (grind-reals) nil nil)) nil))
+    nil)
+   ((real_minus_real_is_real application-judgement "real" reals nil)
+    (number nonempty-type-decl nil numbers nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (real_le_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (neg_times_le formula-decl nil real_props nil))
+   shostak))
+ (ex_3 0
+  (ex_3-1 nil 3715077173 ("" (skeep) (("" (sturm) nil nil)) nil)
+   ((boolean nonempty-type-decl nil booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (number nonempty-type-decl nil numbers nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (TRUE const-decl "bool" booleans nil)
+    (id const-decl "(bijective?[T, T])" identity nil)
+    (bijective? const-decl "bool" functions nil)
+    (minus_odd_is_odd application-judgement "odd_int" integers nil)
+    (nzrat_div_nzrat_is_nzrat application-judgement "nzrat" rationals
+     nil)
+    (cons adt-constructor-decl "[[T, list] -> (cons?)]" list_adt nil)
+    (- const-decl "[numfield -> numfield]" number_fields nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (null adt-constructor-decl "(null?)" list_adt nil)
+    (real_le_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (le_realorder name-judgement "RealOrder" real_orders "reals/")
+    (SturmRel? const-decl "bool" compute_sturm "Sturm/")
+    (<= const-decl "bool" reals nil)
+    (FALSE const-decl "bool" booleans nil)
+    (RealInt type-eq-decl nil RealInt "reals/")
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (gt_realorder name-judgement "RealOrder" real_orders "reals/")
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (lt_realorder name-judgement "RealOrder" real_orders "reals/")
+    (polylist_minus formula-decl nil polylist "Sturm/")
+    (polylist_prod formula-decl nil polylist "Sturm/")
+    (polylist_const formula-decl nil polylist "Sturm/")
+    (polylist_monom formula-decl nil polylist "Sturm/")
+    (expt_x1 formula-decl nil exponentiation nil)
+    (contains? const-decl "bool" RealInt "reals/")
+    (sturm const-decl "bool" poly_strategy "Sturm/")
+    (stu__1 skolem-const-decl "Polylist" realproving nil)
+    (real_minus_real_is_real application-judgement "real" reals nil)
+    (sturm_def formula-decl nil poly_strategy "Sturm/")
+    (listn_0 name-judgement "listn[rat](0)" polylist "Sturm/")
+    (listn_0 name-judgement "listn[real](0)" polynomial_division
+     "Sturm/")
+    (listn_0 name-judgement "listn[int](0)" gcd_coeff "Sturm/")
+    (deg const-decl "{d: below(length(pl)) |
+         (d > 0 IFF
+           (EXISTS (j: below(length(pl))): j > 0 AND nth(pl, j) /= 0))
+          AND
+          (d > 0 IMPLIES
+            (FORALL (j: below(length(pl))): j > d IMPLIES nth(pl, j) = 0))
+           AND (d > 0 IMPLIES nth(pl, d) /= 0)}" polylist "Sturm/")
+    (IMPLIES const-decl "[bool, bool -> bool]" booleans nil)
+    (nth def-decl "T" list_props nil)
+    (below type-eq-decl nil nat_types nil)
+    (> const-decl "bool" reals nil)
+    (IFF const-decl "[bool, bool -> bool]" booleans nil)
+    (below type-eq-decl nil naturalnumbers nil)
+    (< const-decl "bool" reals nil) (list type-decl nil list_adt nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rat nonempty-type-eq-decl nil rationals nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (Polylist type-eq-decl nil polylist "Sturm/")
+    (pminus const-decl "Polylist" polylist "Sturm/")
+    (pprod const-decl "Polylist" polylist "Sturm/")
+    (rational nonempty-type-from-decl nil rationals nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (>= const-decl "bool" reals nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (length def-decl "nat" list_props nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (polylist const-decl "real" polylist "Sturm/")
+    (* const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (/= const-decl "boolean" notequal nil)
+    (^ const-decl "real" exponentiation nil)
+    (pmonom def-decl "{pl: Polylist |
+         length(pl) = deg + 1 AND
+          (FORALL (x: real): polylist(pl)(x) = c * x ^ deg)}" polylist
+     "Sturm/")
+    (pconst const-decl "Polylist" polylist "Sturm/")
+    (nznum nonempty-type-eq-decl nil number_fields nil)
+    (/ const-decl "[numfield, nznum -> numfield]" number_fields nil)
+    (posrat_div_posrat_is_posrat application-judgement "posrat"
+     rationals nil)
+    (real_times_real_is_real application-judgement "real" reals nil))
+   shostak))
+ (ex_4_TCC1 0
+  (ex_4_TCC1-1 nil 3715077856 ("" (subtype-tcc) nil nil)
+   ((/= const-decl "boolean" notequal nil)) nil))
+ (ex_4 0
+  (ex_4-1 nil 3715077856
+   ("" (skeep)
+    (("" (ground)
+      (("1" (tarski) nil nil) ("2" (tarski) nil nil)
+       ("3" (tarski) nil nil))
+      nil))
+    nil)
+   ((le_realorder name-judgement "RealOrder" real_orders "reals/")
+    (real_le_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (minus_odd_is_odd application-judgement "odd_int" integers nil)
+    (tarski_def formula-decl nil poly_system_strategy "Tarski/")
+    (IMPLIES const-decl "[bool, bool -> bool]" booleans nil)
+    (> const-decl "bool" reals nil)
+    (upto nonempty-type-eq-decl nil naturalnumbers nil)
+    (pl_4 skolem-const-decl "Polylist" realproving nil)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (gt_realorder name-judgement "RealOrder" real_orders "reals/")
+    (expt_x1 formula-decl nil exponentiation nil)
+    (rel5 const-decl "bool" poly_system_strategy "Tarski/")
+    (pl_3 skolem-const-decl "Polylist" realproving nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (polylist_monom formula-decl nil polylist "Sturm/")
+    (polylist_const formula-decl nil polylist "Sturm/")
+    (polylist_minus formula-decl nil polylist "Sturm/")
+    (real_minus_real_is_real application-judgement "real" reals nil)
+    (polylist_eval formula-decl nil polylist "Sturm/")
+    (FALSE const-decl "bool" booleans nil)
+    (tarski const-decl "bool" poly_system_strategy "Tarski/")
+    (polyl__7 skolem-const-decl "[nat -> [nat -> rat]]" realproving
+     nil)
+    (subrange type-eq-decl nil integers nil)
+    (degl__8 skolem-const-decl "[nat -> int]" realproving nil)
+    (rell__9 skolem-const-decl "[nat -> naturalnumber]" realproving
+     nil)
+    (<= const-decl "bool" reals nil)
+    (naturalnumber type-eq-decl nil naturalnumbers nil)
+    (IF const-decl "[boolean, T, T -> T]" if_def nil)
+    (list2array def-decl "T" array2list "structures/")
+    (zero_pol const-decl "rat" polylist "Sturm/")
+    (int_minus_int_is_int application-judgement "int" integers nil)
+    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (listn_0 name-judgement "listn[int](0)" gcd_coeff "Sturm/")
+    (listn_0 name-judgement "listn[real](0)" polynomial_division
+     "Sturm/")
+    (listn_0 name-judgement "listn[rat](0)" polylist "Sturm/")
+    (TRUE const-decl "bool" booleans nil)
+    (id const-decl "(bijective?[T, T])" identity nil)
+    (bijective? const-decl "bool" functions nil)
+    (cons adt-constructor-decl "[[T, list] -> (cons?)]" list_adt nil)
+    (- const-decl "[numfield -> numfield]" number_fields nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (null adt-constructor-decl "(null?)" list_adt nil)
+    (pconst const-decl "Polylist" polylist "Sturm/")
+    (pmonom def-decl "{pl: Polylist |
+         length(pl) = deg + 1 AND
+          (FORALL (x: real): polylist(pl)(x) = c * x ^ deg)}" polylist
+     "Sturm/")
+    (^ const-decl "real" exponentiation nil)
+    (/= const-decl "boolean" notequal nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (* const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (polylist const-decl "real" polylist "Sturm/")
+    (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (length def-decl "nat" list_props nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (pminus const-decl "Polylist" polylist "Sturm/")
+    (Polylist type-eq-decl nil polylist "Sturm/")
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (rat nonempty-type-eq-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (list type-decl nil list_adt nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number nonempty-type-decl nil numbers nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (pl_14 skolem-const-decl "Polylist" realproving nil)
+    (pl_13 skolem-const-decl "Polylist" realproving nil)
+    (polyl__17 skolem-const-decl "[nat -> [nat -> rat]]" realproving
+     nil)
+    (degl__18 skolem-const-decl "[nat -> int]" realproving nil)
+    (rell__19 skolem-const-decl "[nat -> naturalnumber]" realproving
+     nil)
+    (rell__31 skolem-const-decl "[nat -> naturalnumber]" realproving
+     nil)
+    (degl__30 skolem-const-decl "[nat -> int]" realproving nil)
+    (polyl__29 skolem-const-decl "[nat -> [nat -> rat]]" realproving
+     nil)
+    (pl_23 skolem-const-decl "Polylist" realproving nil)
+    (pl_24 skolem-const-decl "Polylist" realproving nil)
+    (pl_25 skolem-const-decl "Polylist" realproving nil))
+   shostak))
+ (r_TCC1 0
+  (r_TCC1-1 nil 3715080131 ("" (subtype-tcc) nil nil)
+   ((/= const-decl "boolean" notequal nil)) nil))
+ (r_TCC2 0
+  (r_TCC2-1 nil 3715080131 ("" (subtype-tcc) nil nil)
+   ((/= const-decl "boolean" notequal nil)) nil))
+ (atan_implementation 0
+  (atan_implementation-1 nil 3715079292 ("" (interval) nil nil)
+   ((listn_0 name-judgement "listn[int](0)" gcd_coeff "Sturm/")
+    (listn_0 name-judgement "listn[real](0)" polynomial_division
+     "Sturm/")
+    (listn_0 name-judgement "listn[rat](0)" polylist "Sturm/")
+    (nzrat_div_nzrat_is_nzrat application-judgement "nzrat" rationals
+     nil)
+    (Maybe type-decl nil Maybe "structures/")
+    (list type-decl nil list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (cons? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (some? adt-recognizer-decl "[Maybe -> boolean]" Maybe
+     "structures/")
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (val adt-accessor-decl "[(some?) -> T]" Maybe "structures/")
+    (IntervalOutput type-eq-decl nil gbandb_boolexpr "interval_arith/")
+    (Interval type-eq-decl nil interval "interval_arith/")
+    (Box type-eq-decl nil box "interval_arith/")
+    (ProperBox? const-decl "bool" box "interval_arith/")
+    (ProperBox type-eq-decl nil box "interval_arith/")
+    (DirVar type-eq-decl nil branch_and_bound "structures/")
+    (stack type-eq-decl nil stack "structures/")
+    (length def-decl "nat" list_props nil)
+    (DirVarStack type-eq-decl nil branch_and_bound "structures/")
+    (DirVarSelector type-eq-decl nil branch_and_bound "structures/")
+    (Output type-eq-decl nil branch_and_bound "structures/")
+    (interval const-decl "Output" interval_bandb "interval_arith/")
+    (alt_max const-decl "DirVar" gbandb_boolexpr "interval_arith/")
+    (cons adt-constructor-decl "[[T, list] -> (cons?)]" list_adt nil)
+    ([\|\|] const-decl "Interval" interval "interval_arith/")
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (null adt-constructor-decl "(null?)" list_adt nil)
+    (Some adt-constructor-decl "[T -> (some?)]" Maybe "structures/")
+    (FALSE const-decl "bool" booleans nil)
+    (vars_in_box formula-decl nil box "interval_arith/")
+    (length_singleton formula-decl nil more_list_props "structures/")
+    (|##| const-decl "bool" interval "interval_arith/")
+    (ub_interval formula-decl nil interval "interval_arith/")
+    (lb_interval formula-decl nil interval "interval_arith/")
+    (* const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (atan const-decl "{x: real_abs_lt_pi2 | y = tan_restrict(x)}" atan
+          "trig/")
+    (tan_restrict const-decl "real" trig_basic "trig/")
+    (real_abs_lt_pi2 nonempty-type-eq-decl nil trig_types "trig/")
+    (pi const-decl "{x: real | x > 2 AND x < 4 AND cos(x / 2) = 0}"
+     pi_def "trig/")
+    (cos const-decl "real" sincos_def "trig/")
+    (> const-decl "bool" reals nil) (< const-decl "bool" reals nil)
+    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (abs_le formula-decl nil abs_lems "reals/")
+    (minus_nzrat_is_nzrat application-judgement "nzrat" rationals nil)
+    (vars_in_box_rec def-decl
+     "{b: bool | b = (FORALL (k: subrange(i, n - 1)): vs(k) ## nth(box, k - i))}"
+     box "interval_arith/")
+    (iar_35 skolem-const-decl "(bimplies?)" realproving nil)
+    (ge_realorder name-judgement "RealOrder" real_orders "reals/")
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (eval def-decl "real" interval_expr "interval_arith/")
+    (beval def-decl "bool" interval_bexpr "interval_arith/")
+    (x_36 skolem-const-decl "real" realproving nil)
+    (list2array def-decl "T" array2list "structures/")
+    (vars_in_box? const-decl "bool" box "interval_arith/")
+    (Env type-eq-decl nil box "interval_arith/")
+    (^ const-decl "real" exponentiation nil)
+    (posrat_exp application-judgement "posrat" exponentiation nil)
+    (nnrat_exp application-judgement "nnrat" exponentiation nil)
+    (sound? const-decl "bool" interval_bandb "interval_arith/")
+    (minus_odd_is_odd application-judgement "odd_int" integers nil)
+    (interval_soundness formula-decl nil interval_bandb
+     "interval_arith/")
+    (real_le_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (le_realorder name-judgement "RealOrder" real_orders "reals/")
+    (POW adt-constructor-decl "[[RealExpr, nat] -> (pow?)]"
+     IntervalExpr_adt "interval_arith/")
+    (MULT adt-constructor-decl "[[RealExpr, RealExpr] -> (mult?)]"
+     IntervalExpr_adt "interval_arith/")
+    (ATAN_n const-decl "RealExpr" interval_expr_trig "interval_arith/")
+    (SUB adt-constructor-decl "[[RealExpr, RealExpr] -> (sub?)]"
+     IntervalExpr_adt "interval_arith/")
+    (r2E const-decl "RealExpr" interval_expr "interval_arith/")
+    (X const-decl "RealExpr" interval_expr "interval_arith/")
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (ABS adt-constructor-decl "[RealExpr -> (abs?)]" IntervalExpr_adt
+     "interval_arith/")
+    (BREL adt-constructor-decl
+     "[[RealOrder, RealExpr, RealExpr] -> (brel?)]" IntervalExpr_adt
+     "interval_arith/")
+    (RealExpr type-eq-decl nil IntervalExpr_adt "interval_arith/")
+    (fun4? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (letin? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (fun2? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (fun? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (div? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (pow? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (sq? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (mult? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (sub? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (neg? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (abs? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (add? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (varidx? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (const? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (RealOrder type-eq-decl nil real_orders "reals/")
+    (realorder? const-decl "bool" real_orders "reals/")
+    (BIMPLIES adt-constructor-decl
+     "[[BoolExpr, BoolExpr] -> (bimplies?)]" IntervalExpr_adt
+     "interval_arith/")
+    (BoolExpr type-eq-decl nil IntervalExpr_adt "interval_arith/")
+    (bletin? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (bite? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (bincludes? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (brel? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (bimplies? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (bor? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (band? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (bnot? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (bconst? adt-recognizer-decl "[IntervalExpr -> boolean]"
+     IntervalExpr_adt "interval_arith/")
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (IntervalExpr type-decl nil IntervalExpr_adt "interval_arith/")
+    (minus_even_is_even application-judgement "even_int" integers nil)
+    (minus_nzint_is_nzint application-judgement "nzint" integers nil)
+    (posrat_div_posrat_is_posrat application-judgement "posrat"
+     rationals nil)
+    (real_plus_real_is_real application-judgement "real" reals nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (real_minus_real_is_real application-judgement "real" reals nil)
+    (minus_nzreal_is_nzreal application-judgement "nzreal" real_types
+     nil)
+    (pi_bound name-judgement "{r: posreal | pi_lb < r AND r < pi_ub}"
+     atan_approx "trig/")
+    (pi_bound name-judgement
+     "{r: posreal | pi_lb_new <= r AND r <= pi_ub_new}" pi_def "trig/")
+    (TRUE const-decl "bool" booleans nil)
+    (id const-decl "(bijective?[T, T])" identity nil)
+    (bijective? const-decl "bool" functions nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (boolean nonempty-type-decl nil booleans nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (number nonempty-type-decl nil numbers nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (IMPLIES const-decl "[bool, bool -> bool]" booleans nil)
+    (<= const-decl "bool" reals nil) (>= const-decl "bool" reals nil)
+    (nonneg_real nonempty-type-eq-decl nil real_types nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (- const-decl "[numfield -> numfield]" number_fields nil)
+    (abs const-decl "{n: nonneg_real | n >= m AND n >= -m}" real_defs
+         nil)
+    (/= const-decl "boolean" notequal nil)
+    (nznum nonempty-type-eq-decl nil number_fields nil)
+    (/ const-decl "[numfield, nznum -> numfield]" number_fields nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil))
+   shostak))
+ (pi_10th 0
+  (pi_10th-1 nil 3715080133
+   ("" (era-numerical (! 1 1)) (("" (assert) nil nil)) nil)
+   ((rat_div_nzrat_is_rat application-judgement "rat" rationals nil)
+    (posrat_div_posrat_is_posrat application-judgement "posrat"
+     rationals nil)
+    (nm_37 skolem-const-decl "(floor?)" realproving nil)
+    (ge_realorder name-judgement "RealOrder" real_orders "reals/")
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (posnat_expt application-judgement "posnat" exponentiation nil)
+    (expt def-decl "real" exponentiation nil)
+    (pi const-decl "{x: real | x > 2 AND x < 4 AND cos(x / 2) = 0}"
+     pi_def "trig/")
+    (/ const-decl "[numfield, nznum -> numfield]" number_fields nil)
+    (nznum nonempty-type-eq-decl nil number_fields nil)
+    (cos const-decl "real" sincos_def "trig/")
+    (floor const-decl "{i | i <= x & x < i + 1}" floor_ceil nil)
+    (< const-decl "bool" reals nil) (<= const-decl "bool" reals nil)
+    (integer nonempty-type-from-decl nil integers nil)
+    (mult_divides2 application-judgement "(divides(m))" divides nil)
+    (even_times_int_is_even application-judgement "even_int" integers
+     nil)
+    (nnint_times_nnint_is_nnint application-judgement "nonneg_int"
+     integers nil)
+    (posint_plus_nnint_is_posint application-judgement "posint"
+     integers nil)
+    (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (nonzero_real nonempty-type-eq-decl nil reals nil)
+    (times_div_cancel2 formula-decl nil extra_real_props nil)
+    (int_times_int_is_int application-judgement "int" integers nil)
+    (posint_times_posint_is_posint application-judgement "posint"
+     integers nil)
+    (mult_divides1 application-judgement "(divides(n))" divides nil)
+    (Eval_real def-decl "Maybe[real]" cauchy_expr_Eval
+     "exact_real_arith/")
+    (val adt-accessor-decl "[(some?) -> T]" Maybe "structures/")
+    (* const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (^ const-decl "real" exponentiation nil)
+    (/= const-decl "boolean" notequal nil)
+    (OR const-decl "[bool, bool -> bool]" booleans nil)
+    (posreal nonempty-type-eq-decl nil real_types nil)
+    (> const-decl "bool" reals nil)
+    (nonneg_real nonempty-type-eq-decl nil real_types nil)
+    (both_sides_div_pos_lt1 formula-decl nil real_props nil)
+    (int_minus_int_is_int application-judgement "int" integers nil)
+    (lt_realorder name-judgement "RealOrder" real_orders "reals/")
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (real_plus_real_is_real application-judgement "real" reals nil)
+    (real_minus_real_is_real application-judgement "real" reals nil)
+    (nonneg_floor_is_nat application-judgement "nat" floor_ceil nil)
+    (posreal_times_posreal_is_posreal application-judgement "posreal"
+     real_types nil)
+    (pi_bound name-judgement "{r: posreal | pi_lb < r AND r < pi_ub}"
+     atan_approx "trig/")
+    (pi_bound name-judgement
+     "{r: posreal | pi_lb_new <= r AND r <= pi_ub_new}" pi_def "trig/")
+    (posint_exp application-judgement "posint" exponentiation nil)
+    (real_times_real_is_real application-judgement "real" reals nil)
+    (listn_0 name-judgement "listn[rat](0)" polylist "Sturm/")
+    (listn_0 name-judgement "listn[real](0)" polynomial_division
+     "Sturm/")
+    (listn_0 name-judgement "listn[int](0)" gcd_coeff "Sturm/")
+    (numerical_soundness formula-decl nil cauchy_numerical
+     "exact_real_arith/")
+    (TRUE const-decl "bool" booleans nil)
+    (id const-decl "(bijective?[T, T])" identity nil)
+    (bijective? const-decl "bool" functions nil)
+    (bool nonempty-type-eq-decl nil booleans nil)
+    (Some adt-constructor-decl "[T -> (some?)]" Maybe "structures/")
+    (some? adt-recognizer-decl "[Maybe -> boolean]" Maybe
+     "structures/")
+    (null adt-constructor-decl "(null?)" list_adt nil)
+    (null? adt-recognizer-decl "[list -> boolean]" list_adt nil)
+    (numerical const-decl "Output" cauchy_numerical
+     "exact_real_arith/")
+    (Output type-eq-decl nil cauchy_numerical "exact_real_arith/")
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (every adt-def-decl "boolean" list_adt nil)
+    (PRED type-eq-decl nil defined_types nil)
+    (list type-decl nil list_adt nil)
+    (nat nonempty-type-eq-decl nil naturalnumbers nil)
+    (>= const-decl "bool" reals nil)
+    (int nonempty-type-eq-decl nil integers nil)
+    (integer_pred const-decl "[rational -> boolean]" integers nil)
+    (rational nonempty-type-from-decl nil rationals nil)
+    (Maybe type-decl nil Maybe "structures/")
+    (CauchyExpr type-decl nil CauchyExpr_adt "exact_real_arith/")
+    (boolean nonempty-type-decl nil booleans nil)
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (floor? adt-recognizer-decl "[CauchyExpr -> boolean]"
+     CauchyExpr_adt "exact_real_arith/")
+    (FLOOR adt-constructor-decl "[CauchyExpr -> (floor?)]"
+     CauchyExpr_adt "exact_real_arith/")
+    (mult? adt-recognizer-decl "[CauchyExpr -> boolean]" CauchyExpr_adt
+     "exact_real_arith/")
+    (MULT adt-constructor-decl "[[CauchyExpr, CauchyExpr] -> (mult?)]"
+     CauchyExpr_adt "exact_real_arith/")
+    (sub? adt-recognizer-decl "[CauchyExpr -> boolean]" CauchyExpr_adt
+     "exact_real_arith/")
+    (SUB adt-constructor-decl "[[CauchyExpr, CauchyExpr] -> (sub?)]"
+     CauchyExpr_adt "exact_real_arith/")
+    (pi? adt-recognizer-decl "[CauchyExpr -> boolean]" CauchyExpr_adt
+     "exact_real_arith/")
+    (PI adt-constructor-decl "(pi?)" CauchyExpr_adt
+     "exact_real_arith/")
+    (number nonempty-type-decl nil numbers nil)
+    (number_field_pred const-decl "[number -> boolean]" number_fields
+     nil)
+    (number_field nonempty-type-from-decl nil number_fields nil)
+    (real_pred const-decl "[number_field -> boolean]" reals nil)
+    (real nonempty-type-from-decl nil reals nil)
+    (rational_pred const-decl "[real -> boolean]" rationals nil)
+    (rat nonempty-type-eq-decl nil rationals nil)
+    (r2E const-decl "CauchyExpr" cauchy_expr_Eval "exact_real_arith/"))
+   shostak)))
+

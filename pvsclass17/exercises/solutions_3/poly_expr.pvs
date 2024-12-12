@@ -1,0 +1,174 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Exercises on Induction, Recursion, and Iteration (Abstract Data Types)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+poly_expr : THEORY
+BEGIN
+
+  IMPORTING PolyExpr
+
+  % Evaluation function of PolyExpr.
+  % Notice that because of the currified definition,
+  % eval(pexpr) has the type [real->real]
+  eval(pexpr:PolyExpr)(x:real) : RECURSIVE real =
+    CASES pexpr OF
+      CONST(k)     : k,
+      X            : x,
+      ADD(pe1,pe2) : eval(pe1)(x) + eval(pe2)(x),
+      SUB(pe1,pe2) : eval(pe1)(x) - eval(pe2)(x),
+      MUL(pe1,pe2) : eval(pe1)(x) * eval(pe2)(x),
+      POW(pe,n)    : (eval(pe)(x))^n 
+    ENDCASES
+  MEASURE pexpr BY <<      
+
+  % This function computes the symbolic derivative of a PolyExpr
+  dx(pexpr:PolyExpr): RECURSIVE PolyExpr =
+    CASES pexpr OF
+      CONST(k)     : CONST(0),
+      X            : CONST(1),
+      ADD(pe1,pe2) : ADD(dx(pe1),dx(pe2)),
+      SUB(pe1,pe2) : SUB(dx(pe1),dx(pe2)),
+      MUL(pe1,pe2) : ADD(MUL(pe1,dx(pe2)),MUL(dx(pe1),pe2)),
+      POW(pe,n)    : IF n = 1 THEN dx(pe) 
+                     ELSE  MUL(MUL(CONST(n),POW(pe,n-1)),dx(pe))
+		     ENDIF
+    ENDCASES
+  MEASURE pexpr BY <<
+
+  %
+  % Exercise 1: Write a stament representing "the derivative of (x+3)^2-5x is
+  % 2x+1" and prove it.
+  %
+
+  test : LEMMA
+    eval(dx(SUB(POW(ADD(X,CONST(3)),2),MUL(CONST(5),X)))) =
+    eval(ADD(MUL(CONST(2),X),CONST(1)))
+
+%|- test : PROOF
+%|- (then (decompose-equality) (grind))
+%|- QED
+
+  IMPORTING analysis@continuous_lambda[real]
+
+  %
+  % Exercise 2: Prove the judgement eval_continuous
+  %
+
+  eval_continuous : RECURSIVE JUDGEMENT
+    eval(pexpr:PolyExpr) HAS_TYPE continuous_fun
+
+%|- eval_continuous_TCC2 : PROOF
+%|- (then (skeep) (use "PolyExpr_inclusive")
+%|-  (spread (split -1)
+%|-   ((then (assert) (hide -1) (use "const_cont"))
+%|-    (then (assert) (hide -1) (use "id_cont"))
+%|-    (then (assert) (hide -1) (typepred "v(expr1(pexpr))")
+%|-     (typepred "v(expr2(pexpr))")
+%|-     (spread (use "add_cont")
+%|-      ((then (hide -2 2) (grind)) (then (hide -1 2) (grind)))))
+%|-    (then (assert) (hide -1) (typepred "v(expr1(pexpr))")
+%|-     (typepred "v(expr2(pexpr))")
+%|-     (spread (use "sub_cont")
+%|-      ((then (hide -2 2) (grind)) (then (hide -1 2) (grind)))))
+%|-    (then (assert) (hide -1) (typepred "v(expr1(pexpr))")
+%|-     (typepred "v(expr2(pexpr))")
+%|-     (spread (use "mult_cont")
+%|-      ((then (hide -2 2) (grind)) (then (hide -1 2) (grind)))))
+%|-    (then (assert) (hide -1) (typepred "v(expr(pexpr))")
+%|-     (use "pow_cont") (hide 2) (grind)))))
+%|- QED
+
+  IMPORTING analysis@deriv_domains,
+            analysis@derivatives_lam[real],
+	    analysis@chain_rule[real,real]
+            
+  %
+  % Exercise 3: Prove the judgement eval_differentiable
+  %
+
+  eval_differentiable : RECURSIVE JUDGEMENT
+    eval(pexpr:PolyExpr) HAS_TYPE deriv_fun
+
+%|- eval_differentiable_TCC2 : PROOF
+%|- (then (skeep) (use "PolyExpr_inclusive")
+%|-  (spread (split -1)
+%|-   ((then (assert) (use "derivable_const_lam"))
+%|-    (then (assert) (hide -1) (use "derivable_id_lam"))
+%|-    (then (assert) (hide -1) (typepred "v(expr1(pexpr))")
+%|-     (typepred "v(expr2(pexpr))")
+%|-     (spread (use "derivable_add_lam")
+%|-      ((then (hide -2 2) (grind)) (then (hide -1 2) (grind)))))
+%|-    (then (assert) (hide -1) (typepred "v(expr1(pexpr))")
+%|-     (typepred "v(expr2(pexpr))")
+%|-     (spread (use "derivable_sub_lam")
+%|-      ((then (hide -2 2) (grind)) (then (hide -1 2) (grind)))))
+%|-    (then (assert) (hide -1) (typepred "v(expr1(pexpr))")
+%|-     (typepred "v(expr2(pexpr))")
+%|-     (spread (use "derivable_mult_lam")
+%|-      ((then (hide -2 2) (grind)) (then (hide -1 2) (grind)))))
+%|-    (then (assert) (hide -1) (typepred "v(expr(pexpr))")
+%|-     (lemma "comp_derivable_fun")
+%|-     (spread (inst -1 "v(expr(pexpr))" "LAMBDA(x:real):x^expo(pexpr)")
+%|-      ((then (assert) (hide -1 2) (use "derivable_pow_lam"))
+%|-       (then (hide -1 2) (skeep) (assert))))))))
+%|- QED
+
+  %
+  % Homework: Prove the lemma eval_differentiable
+  %
+
+  eval_derivative : LEMMA
+    FORALL(pexpr:PolyExpr):
+      eval(dx(pexpr)) = deriv(eval(pexpr)) 
+
+%|- eval_derivative : PROOF
+%|- (then
+%|-  (deftactic dd (nm)
+%|-   (let ((lem (format nil "deriv_~a_lam" nm)))
+%|-     (then (skeep) (decompose-equality 1) (expand "dx" 1)
+%|-      (expand "eval" 1) (use lem) (replaces -1) (assert))))
+%|-  (deftactic dd2 (nm)
+%|-   (let ((lem (format nil "deriv_~a_lam" nm)))
+%|-     (with-fresh-names ((x1) (x2))
+%|-      (let ((ev1 (format nil "eval(~a)" x1))
+%|-            (ev2 (format nil "eval(~a)" x2)))
+%|-        (then (skolem 1 (x1 x2)) (flatten) (decompose-equality 1)
+%|-         (expand "dx" 1) (expand "eval" 1)
+%|-         (spread (use lem)
+%|-          ((then (replaces -) (assert) (lemma "eta[real,real]")
+%|-            (inst-cp -1 ev1) (inst -1 ev2) (replaces -))
+%|-           (then (hide-all-but 1) (lemma "eta[real,real]") (inst -1 ev2)
+%|-            (replaces -1) (assert))
+%|-           (then (hide-all-but 1) (lemma "eta[real,real]") (inst -1 ev1)
+%|-            (replaces -1) (assert)))))))))
+%|-  (spread (induct "pexpr")
+%|-   ((dd "const") (dd "id") (dd2 "add") (dd2 "sub")
+%|-    (then (skolem 1 ("x1" "x2")) (flatten) (decompose-equality 1)
+%|-     (expand "dx" 1) (expand "eval" 1) (expand "eval" 1 1)
+%|-     (expand "eval" 1 1)
+%|-     (spread (use "deriv_mult_lam")
+%|-      ((then (replaces -) (assert) (lemma "eta[real,real]")
+%|-        (inst-cp -1 "eval(x1)") (inst -1 "eval(x2)") (replaces -)
+%|-        (assert))
+%|-       (then (hide-all-but 1) (lemma "eta[real,real]")
+%|-        (inst -1 "eval(x2)") (replaces -1) (assert))
+%|-       (then (hide-all-but 1) (lemma "eta[real,real]")
+%|-        (inst -1 "eval(x1)") (replaces -1) (assert)))))
+%|-    (then (skeep) (expand "dx" 1)
+%|-     (spread (case-replace "POW2_var = 1")
+%|-      ((then (hide -1) (replaces -1) (expand "eval" 1 2) (expand "^")
+%|-        (expand "expt") (expand "expt") (lemma "eta[real,real]")
+%|-        (inst -1 "eval(POW1_var)") (replaces -1))
+%|-       (then (assert) (expand "eval" 2 1) (expand "eval" 2 1)
+%|-        (expand "eval" 2 1) (expand "eval" 2 2) (expand "eval" 2 3)
+%|-        (replaces -1) (lemma "chain_rule[real,real]")
+%|-        (spread (inst -1 "eval(POW1_var)" "LAMBDA(x:real):x^POW2_var")
+%|-         ((then (replaces -1) (assert) (lemma "deriv_pow_lam")
+%|-           (inst -1 "POW2_var") (replaces -1) (decompose-equality 2)
+%|-           (expand "*") (propax))
+%|-          (then (hide 2 3) (use "derivable_pow_lam")))))))))))
+%|- QED
+
+END poly_expr
